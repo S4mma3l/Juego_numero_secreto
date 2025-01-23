@@ -2,36 +2,51 @@ let numeroSecreto = 0;
 let listaNumerosSorteados = [];
 let intentos = 0;
 let numeroMaximo = 10;
+let selectedNumber = 1; // Número seleccionado inicialmente
+
+// Inicializar Swiper
+const swiper = new Swiper('.swiper', {
+  direction: 'vertical',
+  slidesPerView: 'auto',
+  centeredSlides: true,
+  spaceBetween: 10,
+  grabCursor: true,
+  loop: true,
+  freeMode: true,
+  effect: 'coverflow', 
+  coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: true,
+  },
+});
+
+// Obtener el número seleccionado
+swiper.on('slideChange', () => {
+  selectedNumber = parseInt(swiper.slides[swiper.activeIndex].textContent);
+});
+
 
 function asignarTextoElemento(elemento, texto) {
   document.querySelector(elemento).innerHTML = texto;
 }
 
 function verificarIntento() {
-  let numeroDelUsuario = parseInt(document.getElementById('valorUsuario').value);
+  let numeroDelUsuario = selectedNumber; // Usar el número del selector
   if (numeroDelUsuario === numeroSecreto) {
     asignarTextoElemento('p', `Acertaste el número secreto en ${intentos} ${intentos === 1 ? 'vez' : 'veces'}`);
     document.getElementById('reiniciar').removeAttribute('disabled');
-    document.querySelector('#reiniciar').classList.remove('disabled'); // Quitar la clase "disabled"
+    document.querySelector('#reiniciar').classList.remove('disabled'); 
   } else {
     if (numeroDelUsuario > numeroSecreto) {
       asignarTextoElemento('p', 'El número secreto es menor');
     } else {
       asignarTextoElemento('p', 'El número secreto es mayor');
     }
-    // Efecto "shake" en el input
-    const input = document.getElementById('valorUsuario');
-    input.classList.add('shake');
-    setTimeout(() => {
-      input.classList.remove('shake');
-    }, 500);
     intentos++;
-    limpiarCaja();
   }
-}
-
-function limpiarCaja() {
-  document.querySelector('#valorUsuario').value = '';
 }
 
 function generarNumeroSecreto() {
@@ -49,16 +64,15 @@ function generarNumeroSecreto() {
 }
 
 function condicionesIniciales() {
-  asignarTextoElemento('h1', 'Bienvenido al juego del número secreto');
+  asignarTextoElemento('h1', 'Bienvenido al juego');
   asignarTextoElemento('p', `Indica un número del 1 al ${numeroMaximo}`);
   numeroSecreto = generarNumeroSecreto();
   intentos = 1;
   document.querySelector('#reiniciar').setAttribute('disabled', true);
-  document.querySelector('#reiniciar').classList.add('disabled'); // Agregar la clase "disabled"
+  document.querySelector('#reiniciar').classList.add('disabled'); 
 }
 
 function reiniciarJuego() {
-  limpiarCaja();
   condicionesIniciales(); 
 }
 
