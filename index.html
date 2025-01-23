@@ -8,9 +8,20 @@
   <div class="container">
     <h1>Adivina el Número</h1>
     <p>Indica un número del 1 al 10</p>
-    <input type="number" id="valorUsuario" placeholder="Ingresa tu número">
+    <select id="valorUsuario">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
     <button onclick="verificarIntento()">Verificar</button>
-    <button id="reiniciar" onclick="reiniciarJuego()" disabled>Reiniciar</button>
+    <button id="reiniciar" onclick="reiniciarJuego()" disabled class="disabled">Reiniciar</button>
   </div>
   <script src="app.js"></script>
 </body>
